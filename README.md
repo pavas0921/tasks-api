@@ -1,22 +1,6 @@
-📘 README – Tasks API (NestJS + Prisma)
-📝 Descripción
+📘 Tasks API – NestJS + Prisma
 
-Esta API implementa un CRUD completo para la gestión de tareas (Tasks), siguiendo buenas prácticas de NestJS, arquitectura en capas y validación con DTOs.
-Incluye:
-
-NestJS con estructura modular.
-
-Prisma como ORM.
-
-DTOs con validación usando class-validator.
-
-Enum para estados permitidos.
-
-Piped globales para sanitización y transformación.
-
-Arquitectura: Controller → Service → Repository → Prisma.
-
-
+API REST construida con NestJS y Prisma ORM, implementando un CRUD completo para la gestión de tareas, con arquitectura en capas, validación con DTOs y buenas prácticas de desarrollo.
 
 🚀 Tecnologías utilizadas
 
@@ -32,17 +16,15 @@ PostgreSQL
 
 class-validator / class-transformer
 
-
-⚙️ Configuración inicial
+⚙️ Configuración Inicial
 1️⃣ Instalar dependencias
 npm install
 
 2️⃣ Configurar la base de datos
 
-Editar el archivo:
-.env
-DATABASE_URL="postgresql://my_user:my_password@localhost:5432/tasks_db?schema=public"
+Crear o editar el archivo .env:
 
+DATABASE_URL="postgresql://my_user:my_password@localhost:5432/tasks_db?schema=public"
 
 3️⃣ Generar cliente Prisma
 npx prisma generate
@@ -54,19 +36,15 @@ npx prisma migrate dev --name init
 npm run start:dev
 
 
-La API correrá en:
-
-http://localhost:3000
+📍 La API estará disponible en:
+👉 http://localhost:3000
 
 🧪 Endpoints
-
-A continuación los endpoints implementados y ejemplos de prueba.
-
 ➕ 1. Crear tarea
-
 POST /tasks
 
-Body:
+Body
+
 {
   "title": "Implementar login",
   "description": "Agregar autenticación JWT",
@@ -74,11 +52,8 @@ Body:
 }
 
 📋 2. Obtener todas las tareas
-
 GET /tasks
-
 🔍 3. Obtener una tarea por ID
-
 GET /tasks/:id
 
 Ejemplo:
@@ -86,75 +61,73 @@ Ejemplo:
 GET http://localhost:3000/tasks/1
 
 ✏️ 4. Actualizar una tarea completa
-
 PUT /tasks/:id
 
-Body:
+Body
+
 {
   "title": "Nuevo título",
   "description": "Nueva descripción",
   "status": "completada"
 }
 
-🔄 5. Actualizar solo el estado (PATCH)
-
+🔄 5. Actualizar solo el estado
 PATCH /tasks/:id
 
-Body:
+Body
+
 {
   "status": "completada"
 }
 
 🗑️ 6. Eliminar una tarea
-
 DELETE /tasks/:id
-
-🧱 Validaciones implementadas
-DTO: CreateTaskDto
+🧱 Validaciones Implementadas
+📌 DTO: CreateTaskDto
 
 title: requerido, string
 
 description: opcional
 
-status: enum obligatorio (pendiente, completada)
+status: enum (pendiente, completada)
 
-DTO: GetTaskByIdDto
+📌 DTO: GetTaskByIdDto
 
 id: entero, mínimo 1
 
-DTO: UpdateTaskStatusDto
+📌 DTO: UpdateTaskStatusDto
 
 status: enum obligatorio
 
-🧠 Arquitectura aplicada
+🧠 Arquitectura Aplicada
 
-Se utiliza una arquitectura en 3 capas (MVC) + Repository:
+Arquitectura en 3 capas + Repository:
 
-Controller
+1️⃣ Controller
 
-Recibe la petición.
+Recibe la petición
 
-Valida con DTOs.
+Valida con DTOs
 
-No contiene lógica de negocio.
+No contiene lógica de negocio
 
-Service
+2️⃣ Service
 
-Contiene la lógica de negocio.
+Lógica de negocio
 
-Valida existencia de entidades.
+Validación de existencia
 
-Lanza excepciones (NotFoundException).
+Manejo de errores (NotFoundException)
 
-Repository
+3️⃣ Repository
 
-Única capa que interactúa con Prisma.
+Interacción directa con Prisma
 
-CRUD directo en base de datos.
+CRUD sobre la base de datos
 
-🛡️ Validación global
+🛡️ Validación Global
 
-En main.ts se configura:
+En main.ts:
 
 app.useGlobalPipes(
   new ValidationPipe({
@@ -165,11 +138,9 @@ app.useGlobalPipes(
 );
 
 
-Esto asegura:
-
-✔ Solo se reciben las properties definidas en el DTO
-✔ Conversión de tipos (id como number)
-✔ Validación automática y respuestas 400 claras
+✔ Solo se aceptan propiedades definidas en los DTO
+✔ Conversión automática de tipos
+✔ Respuestas claras con errores 400
 
 🙋‍♂️ Autor
 
