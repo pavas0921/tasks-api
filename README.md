@@ -16,7 +16,7 @@ Piped globales para sanitización y transformación.
 
 Arquitectura: Controller → Service → Repository → Prisma.
 
-Ideal para pruebas técnicas y proyectos base escalables.
+
 
 🚀 Tecnologías utilizadas
 
@@ -28,26 +28,10 @@ TypeScript
 
 Prisma ORM
 
-SQLite / PostgreSQL (dependiendo del .env)
+PostgreSQL
 
 class-validator / class-transformer
 
-📂 Estructura del proyecto
-src/
- ├── tasks/
- │    ├── dto/
- │    │     ├── create-task.dto.ts
- │    │     ├── update-status.dto.ts
- │    │     └── get-taskById.dto.ts
- │    ├── enums/
- │    │     └── task-status.enum.ts
- │    ├── tasks.controller.ts
- │    ├── tasks.service.ts
- │    └── tasks.repository.ts
- ├── prisma/
- │    ├── schema.prisma
- ├── app.module.ts
- └── main.ts
 
 ⚙️ Configuración inicial
 1️⃣ Instalar dependencias
@@ -56,13 +40,9 @@ npm install
 2️⃣ Configurar la base de datos
 
 Editar el archivo:
-
 .env
+DATABASE_URL="postgresql://my_user:my_password@localhost:5432/tasks_db?schema=public"
 
-
-Ejemplo con SQLite:
-
-DATABASE_URL="file:./dev.db"
 
 3️⃣ Generar cliente Prisma
 npx prisma generate
@@ -148,7 +128,7 @@ status: enum obligatorio
 
 🧠 Arquitectura aplicada
 
-Se utiliza una arquitectura en 3 capas:
+Se utiliza una arquitectura en 3 capas (MVC) + Repository:
 
 Controller
 
